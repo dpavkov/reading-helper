@@ -19,3 +19,11 @@ Feature: I can login
     When I press "Log in"
     When I follow "Sign out"
     Then I should be on the home page
+
+  Scenario: If I forget my password, I shouldn't be able to play
+    Given I have user "example@mail.com" identified with "password"
+    When I go to the login page
+    When I fill in "example@mail.com" for "user_email"
+    When I fill in "passwords" for "user_password"
+    When I press "Log in"
+    Then I should see "Invalid email or password."
