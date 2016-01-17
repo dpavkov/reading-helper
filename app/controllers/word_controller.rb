@@ -10,9 +10,15 @@ class WordController < ApplicationController
     @text.url = params[:text][:url]
     @text.speed = params[:text][:speed]
     @text.random_color = params[:text][:random_color]
-    if @text.save
-      flash.notice = "Pleasant reading. If text doesn't start in a several seconds, double check your url."
-      start_streaming!(@text)
+    if @text.validate
+      streaming_status = start_streaming!(@text)
+      if streaming_status.nil?
+        @text.save
+        flash.notice = "Pleasant reading."
+      else
+        flash.alert = streaming_status
+
+      end
     else
       flash.alert = format_model_errors @text
     end

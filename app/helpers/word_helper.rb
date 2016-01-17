@@ -32,7 +32,10 @@ module WordHelper
     doc = read_url text.url
     if !doc.nil?
       words = parse_doc doc
-      schedule_stream(words, text.speed, text.random_color)
+      schedule_stream!(words, text.speed, text.random_color)
+      return nil
+    else
+      return "Couldn't read your url, sory!"
     end
   end
 
@@ -46,7 +49,7 @@ module WordHelper
     end
   end
 
-  def schedule_stream(words, seconds, color)
+  def schedule_stream!(words, seconds, color)
     index = 0
     scheduler = Rufus::Scheduler.new
     scheduler.every seconds, allow_overlapping: false do
