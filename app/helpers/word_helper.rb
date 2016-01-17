@@ -33,7 +33,7 @@ module WordHelper
     doc = read_url text.url
     if !doc.nil?
       words = parse_doc doc
-      schedule_stream!(words, text.speed, text.random_color == "1")
+      schedule_stream!(words, text.speed, text.random_color == "1", text.channel)
       return nil
     else
       return "Couldn't read your url, sory!"
@@ -50,22 +50,22 @@ module WordHelper
     end
   end
 
-  def schedule_stream!(words, seconds, color)
+  def schedule_stream!(words, seconds, color, channel)
     index = 0
     scheduler = Rufus::Scheduler.new
     scheduler.every seconds, allow_overlapping: false do
       if index >= words.size
         scheduler.stop(teminate: true)
       else
-        send_word(words[index], color)
+        send_word(words[index], color, channel)
         index += 1;
       end
     end
   end
 
-  def send_word(word, color)
+  def send_word(word, color, channel)
     word_painter_url = "#{ENV['WORD_PAINTER_URL']}/paint"
-    RestClient.post word_painter_url, { 'word' => word, 'random_color' => color }.to_json, :content_type => :json, :accept => :json
+    RestClient.post word_painter_url, { 'word' => word, 'random_color' => color, 'channel' => channel }.to_json, :content_type => :json, :accept => :json
   end
 end
 

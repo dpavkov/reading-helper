@@ -11,7 +11,7 @@ Feature: I can start the streaming
     When I press "Log in"
     When I fill in "https://www.google.com" for "text_url"
     When I fill in "0.5" for "text_speed"
-    When I press "Create"
+    When I press "Read it!"
     Then I should be on word count
     And I should see "Pleasant reading"
 
@@ -22,7 +22,7 @@ Feature: I can start the streaming
     When I fill in "password" for "user_password"
     When I press "Log in"
     When I fill in "0.5" for "text_speed"
-    When I press "Create"
+    When I press "Read it!"
     Then I should be on word count
     And I should see "can't be blank"
 
@@ -33,6 +33,6 @@ Feature: I can start the streaming
     When I fill in "password" for "user_password"
     When I press "Log in"
     When I fill in "https://www.google.com" for "text_url"
-    When I press "Create"
+    When I press "Read it!"
     Then I should be on word count
     And I should see "can't be blank"

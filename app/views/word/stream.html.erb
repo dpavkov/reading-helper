@@ -1,6 +1,7 @@
 <h2>Word streaming</h2>
 
-<%= form_for @text, url: {action: "create"} do |f| %>
+<%= form_for @text, url: {action: "stream"} do |f| %>
+    <%= f.hidden_field :channel,  value: @channel_key %>
     <div>
       <%= f.label :url %>
       <%= f.text_field :url %>
@@ -13,5 +14,14 @@
       <%= f.label :random_color %>
       <%= f.check_box :random_color %>
     </div>
-    <%= f.submit "Create" %>
+    <%= f.submit "Read it!" %>
 <% end %>
+
+<div id="streamingPlace">
+
+</div>
+
+<script>
+  var pusherKey = "<%= @pusher_key %>";
+  var myChannel = "<%= @channel_key %>";
+</script>

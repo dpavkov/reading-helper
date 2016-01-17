@@ -13,7 +13,12 @@ Rails.application.routes.draw do
 
   get 'word/stream'
 
-  post 'word/create'
+  post 'word/stream', to: 'word#create'
+
+  # For some reason, after second render, rails generated javascript targets patch
+  # even though method on form is post. There's no time to investigate now, so this
+  # hack will have to do.
+  patch 'word/stream', to: 'word#create'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
