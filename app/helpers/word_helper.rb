@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'rufus/scheduler'
 
 module WordHelper
 
@@ -31,7 +32,7 @@ module WordHelper
     doc = read_url text.url
     if !doc.nil?
       words = parse_doc doc
-      start_stream words
+      schedule_stream(words, text.speed, text.random_color)
     end
   end
 
@@ -45,10 +46,18 @@ module WordHelper
     end
   end
 
-  def start_stream words
-    words.each do |word|
-      # placeholder for start of streaming
+  def schedule_stream(words, seconds, color)
+    index = 0
+    scheduler = Rufus::Scheduler.new
+    scheduler.every seconds, allow_overlapping: false do
+      if index >= words.size
+        scheduler.stop(teminate: true)
+      else
+        index += 1;
+        # placeholder for sending the next word
+      end
     end
+
   end
 end
 

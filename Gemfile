@@ -25,6 +25,9 @@ gem 'bcrypt', '~> 3.1.7'
 # Security library
 gem 'devise'
 
+# Scheduler
+gem 'rufus-scheduler'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
