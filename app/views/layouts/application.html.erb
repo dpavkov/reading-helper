@@ -9,8 +9,12 @@
 <body>
 <div><%= render "devise/shared/links" %></div>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<p class="notice">
+  <%= notice %>
+</p>
+<p class="alert">
+  <%= sanitize(alert) %>
+</p>
 <%= yield %>
 
 </body>

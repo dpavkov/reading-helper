@@ -44,7 +44,7 @@ group :development do
   gem 'spring'
 end
 
-group :test do
+group :test, :development do
   gem 'cucumber-rails', '~> 1.4.2', :require => false
   gem 'rspec'
   gem 'rspec-rails'
