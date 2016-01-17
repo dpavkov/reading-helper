@@ -1,4 +1,3 @@
-
 class WordController < ApplicationController
   include WordHelper
   before_action :authenticate_user!
@@ -12,7 +11,8 @@ class WordController < ApplicationController
     @text.speed = params[:text][:speed]
     @text.random_color = params[:text][:random_color]
     if @text.save
-      flash.notice = "Pleasant reading"
+      flash.notice = "Pleasant reading. If text doesn't start in a several seconds, double check your url."
+      start_streaming!(@text)
     else
       flash.alert = format_model_errors @text
     end

@@ -1,4 +1,12 @@
+require 'open-uri'
+
 module WordHelper
+
+    def self.included klass
+      klass.class_eval do
+        include HtmlParserConcern
+      end
+    end
 
   def format_model_errors model
     alert = ""
@@ -17,6 +25,30 @@ module WordHelper
       end
     end
     alert
+  end
+
+  def start_streaming!(text)
+    doc = read_url text.url
+    if !doc.nil?
+      words = parse_doc doc
+      start_stream words
+    end
+  end
+
+  private
+
+  def read_url url
+    begin
+      return Nokogiri::HTML(open(url))
+    rescue Errno::ENOENT => e
+      return nil
+    end
+  end
+
+  def start_stream words
+    words.each do |word|
+      # placeholder for start of streaming
+    end
   end
 end
 
