@@ -64,7 +64,8 @@ module WordHelper
   end
 
   def send_word(word, color)
-    RestClient.post 'http://localhost:4567/paint', { 'word' => word, 'random_color' => color }.to_json, :content_type => :json, :accept => :json
+    word_painter_url = "#{ENV['WORD_PAINTER_URL']}/paint"
+    RestClient.post word_painter_url, { 'word' => word, 'random_color' => color }.to_json, :content_type => :json, :accept => :json
   end
 end
 
