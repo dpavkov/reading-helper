@@ -28,6 +28,9 @@ gem 'devise'
 # Scheduler
 gem 'rufus-scheduler'
 
+# rest client
+gem 'rest-client'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

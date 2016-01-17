@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'rufus/scheduler'
+require 'rest-client'
 
 module WordHelper
 
@@ -32,7 +33,7 @@ module WordHelper
     doc = read_url text.url
     if !doc.nil?
       words = parse_doc doc
-      schedule_stream!(words, text.speed, text.random_color)
+      schedule_stream!(words, text.speed, text.random_color == "1")
       return nil
     else
       return "Couldn't read your url, sory!"
@@ -56,11 +57,14 @@ module WordHelper
       if index >= words.size
         scheduler.stop(teminate: true)
       else
+        send_word(words[index], color)
         index += 1;
-        # placeholder for sending the next word
       end
     end
+  end
 
+  def send_word(word, color)
+    RestClient.post 'http://localhost:4567/paint', { 'word' => word, 'random_color' => color }.to_json, :content_type => :json, :accept => :json
   end
 end
 
