@@ -64,15 +64,15 @@ module WordHelper
       if index >= words.size
         stop_job job
       else
-        send_word(words[index], color, channel)
+        send_word(words[index], color, channel, index == words.size - 1)
         index += 1;
       end
     end
   end
 
-  def send_word(word, color, channel)
+  def send_word(word, color, channel, is_last)
     word_painter_url = "#{ENV['WORD_PAINTER_URL']}/paint"
-    RestClient.post word_painter_url, {'word' => word, 'random_color' => color, 'channel' => channel}.to_json, :content_type => :json, :accept => :json
+    RestClient.post word_painter_url, {'word' => word, 'random_color' => color, 'channel' => channel, 'last' => is_last}.to_json, :content_type => :json, :accept => :json
   end
 
   def stop_job job

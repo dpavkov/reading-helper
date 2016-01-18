@@ -6,6 +6,10 @@ $(function() {
     var channel = pusher.subscribe(myChannel);
     channel.bind('word', function(data) {
         $("#streamingPlace").text(data["word"]).removeClass().addClass(data["color"]);
+        if(data["last"]) {
+            pause.addClass("disabled").removeClass("enabled");
+            resume.addClass("disabled").removeClass("enabled");
+        }
     });
 
     // resume/pause logic
@@ -18,25 +22,29 @@ $(function() {
     }
 
     $("#pause").click(function() {
-        $.post({
-            url: "/word/pause",
-            data: {
-                jobId: jobId
-            },
-            success: function() {
-                toggleEnableDisable(resume, pause);
-            }
-        });
+        if (pause.hasClass("enabled")) {
+            $.post({
+                url: "/word/pause",
+                data: {
+                    jobId: jobId
+                },
+                success: function() {
+                    toggleEnableDisable(resume, pause);
+                }
+            });
+        }
     });
     $("#resume").click(function() {
-        $.post({
-            url: "/word/resume",
-            data: {
-                jobId: jobId
-            },
-            success: function() {
-                toggleEnableDisable(pause, resume);
-            }
-        });
+        if (resume.hasClass("enabled")) {
+            $.post({
+                url: "/word/resume",
+                data: {
+                    jobId: jobId
+                },
+                success: function() {
+                    toggleEnableDisable(pause, resume);
+                }
+            });
+        }
     });
 });
