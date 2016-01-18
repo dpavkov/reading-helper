@@ -1,7 +1,7 @@
 
 <div>
   <%= render "devise/shared/devise_links" %>
-  <%- if controller_name != 'applications' %>
+  <%- if controller_name != 'application' %>
   <%= link_to "Home page", '/' %><br />
   <% end -%>
   <%- if user_signed_in? && controller_name != 'word' %>

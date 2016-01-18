@@ -1,19 +1,21 @@
 Rails.application.routes.draw do
 
-
   devise_for :users, controllers: {
       sessions: 'users/sessions',
       registrations: 'users/registrations'
   }
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   root 'application#home'
 
+  # word controllers
   get 'word/stream'
-
   post 'word/stream', to: 'word#create'
+  post 'word/pause', to: 'word#pause'
+  post 'word/resume', to: 'word#resume'
 
   # For some reason, after second render, rails generated javascript targets patch
   # even though method on form is post. There's no time to investigate now, so this

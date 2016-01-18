@@ -4,11 +4,11 @@ require 'rest-client'
 
 module WordHelper
 
-    def self.included klass
-      klass.class_eval do
-        include HtmlParserConcern
-      end
+  def self.included klass
+    klass.class_eval do
+      include HtmlParserConcern
     end
+  end
 
   def format_model_errors model
     alert = ""
@@ -23,39 +23,46 @@ module WordHelper
           alert += error
           alert += " </li> "
         end
-        alert +=  " </ul> "
+        alert += " </ul> "
       end
     end
     alert
   end
 
-  def start_streaming!(text)
-    doc = read_url text.url
-    if !doc.nil?
-      words = parse_doc doc
-      schedule_stream!(words, text.speed, text.random_color == "1", text.channel)
-      return nil
-    else
-      return "Couldn't read your url, sory!"
+  def start_streaming! text
+    doc = Nokogiri::HTML(open(text.url))
+    words = parse_doc doc
+    schedule_stream!(words, text.speed, text.random_color == "1", text.channel)
+  end
+
+  def pause_stream! job_id
+    scheduler = Rufus::Scheduler.singleton
+    scheduler.job(job_id).pause
+  end
+
+  def resume_stream! job_id
+    scheduler = Rufus::Scheduler.singleton
+    scheduler.job(job_id).resume
+  end
+
+  def stop_streaming! job_id
+    scheduler = Rufus::Scheduler.singleton
+    job = scheduler.job(job_id)
+    if job
+      stop_job job
     end
   end
 
   private
 
-  def read_url url
-    begin
-      return Nokogiri::HTML(open(url))
-    rescue Errno::ENOENT => e
-      return nil
-    end
-  end
-
+  # scheduler.every (and so schedule_stream! as well) return job instance,
+  # which later can be used to identify the job
   def schedule_stream!(words, seconds, color, channel)
     index = 0
-    scheduler = Rufus::Scheduler.new
-    scheduler.every seconds, allow_overlapping: false do
+    scheduler = Rufus::Scheduler.singleton
+    scheduler.every seconds, allow_overlapping: false do |job|
       if index >= words.size
-        scheduler.stop(teminate: true)
+        stop_job job
       else
         send_word(words[index], color, channel)
         index += 1;
@@ -65,8 +72,14 @@ module WordHelper
 
   def send_word(word, color, channel)
     word_painter_url = "#{ENV['WORD_PAINTER_URL']}/paint"
-    RestClient.post word_painter_url, { 'word' => word, 'random_color' => color, 'channel' => channel }.to_json, :content_type => :json, :accept => :json
+    RestClient.post word_painter_url, {'word' => word, 'random_color' => color, 'channel' => channel}.to_json, :content_type => :json, :accept => :json
   end
+
+  def stop_job job
+    job.unschedule
+    job.kill
+  end
+
 end
 
 

@@ -2,6 +2,7 @@
 
 <%= form_for @text, url: {action: "stream"} do |f| %>
     <%= f.hidden_field :channel,  value: @channel_key %>
+    <%= f.hidden_field :job_id,  value: @job_id %>
     <div>
       <%= f.label :url %>
       <%= f.text_field :url %>
@@ -18,10 +19,15 @@
 <% end %>
 
 <div id="streamingPlace">
+</div>
 
+<div>
+  <a href="#" id="pause" class="<%= @pause_enabled%> control">Pause</a>
+  <a href="#" id="resume" class="disabled control">Resume</a>
 </div>
 
 <script>
+  var jobId = "<%= @job_id %>"
   var pusherKey = "<%= @pusher_key %>";
   var myChannel = "<%= @channel_key %>";
 </script>

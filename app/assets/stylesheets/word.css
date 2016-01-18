@@ -11,3 +11,16 @@
 .green {
     color: #8EB43F;
 }
+.enabled {
+    color: #2E2F30;
+    cursor: pointer;
+}
+.disabled {
+    color: #DADADA;
+    background-color: #666666;
+    cursor: auto;
+}
+.control {
+    border: solid;
+    text-decoration: none;
+}
