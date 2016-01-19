@@ -80,8 +80,9 @@ test: &test
 #
 production:
   <<: *default
-  database: reading-helper_production
-  username: reading-helper
+  database: <%= ENV['DATABASE'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  url: <%= ENV['DATABASE_URL'] %>
   password: <%= ENV['READING-HELPER_DATABASE_PASSWORD'] %>
 
 cucumber:
