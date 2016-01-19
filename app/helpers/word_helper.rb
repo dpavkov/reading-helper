@@ -32,7 +32,7 @@ module WordHelper
   def start_streaming! text, channel_key
     doc = Nokogiri::HTML(open(text.url))
     words = parse_doc doc
-    schedule_stream!(words, text.speed, text.random_color == "1", channel_key)
+    schedule_stream!(words, text.speed, text.random_color, channel_key)
   end
 
   def pause_stream! job_id

@@ -3,5 +3,4 @@ class Text < ActiveRecord::Base
 
   validates :url, presence: true
   validates :speed, presence: true
-  validates :random_color, presence: true
 end

@@ -14,7 +14,7 @@ class WordController < ApplicationController
   def create
     @text.url = params[:text][:url]
     @text.speed = params[:text][:speed]
-    @text.random_color = params[:text][:random_color]
+    @text.random_color = params[:text][:random_color] == "1"
     @channel_key = SecureRandom.hex(13)
     if @text.validate
       begin
