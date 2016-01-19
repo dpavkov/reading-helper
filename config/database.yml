@@ -80,10 +80,7 @@ test: &test
 #
 production:
   <<: *default
-  database: <%= ENV['DATABASE'] %>
-  username: <%= ENV['DATABASE_USERNAME'] %>
-  url: <%= ENV['DATABASE_URL'] %>
-  password: <%= ENV['READING-HELPER_DATABASE_PASSWORD'] %>
+  url: <%= ENV['RH_DATABASE_URL'] %>
 
 cucumber:
   <<: *test
