@@ -36,18 +36,15 @@ module WordHelper
   end
 
   def pause_stream! job_id
-    scheduler = Rufus::Scheduler.singleton
-    scheduler.job(job_id).pause
+    get_job(job_id).pause
   end
 
   def resume_stream! job_id
-    scheduler = Rufus::Scheduler.singleton
-    scheduler.job(job_id).resume
+    get_job(job_id).resume
   end
 
   def stop_streaming! job_id
-    scheduler = Rufus::Scheduler.singleton
-    job = scheduler.job(job_id)
+    job = get_job(job_id)
     if job
       stop_job job
     end
@@ -73,6 +70,11 @@ module WordHelper
   def send_word(word, color, channel, is_last)
     word_painter_url = "#{ENV['WORD_PAINTER_URL']}/paint"
     RestClient.post word_painter_url, {'word' => word, 'random_color' => color, 'channel' => channel, 'last' => is_last}.to_json, :content_type => :json, :accept => :json
+  end
+
+  def get_job job_id
+    scheduler = Rufus::Scheduler.singleton
+    scheduler.job(job_id)
   end
 
   def stop_job job
