@@ -8,8 +8,6 @@ class WordController < ApplicationController
   end
 
   def stream
-    @pause_enabled = "disabled"
-    @channel_key = SecureRandom.hex(13)
     render layout: 'application'
   end
 
@@ -17,23 +15,25 @@ class WordController < ApplicationController
     @text.url = params[:text][:url]
     @text.speed = params[:text][:speed]
     @text.random_color = params[:text][:random_color]
-    @text.channel = params[:text][:channel]
+    @channel_key = SecureRandom.hex(13)
     if @text.validate
       begin
         stop_streaming! params[:text][:job_id]
         # start_streaming returns job id of the scheduler.
         # Should be used for resume/pause
-        @job_id = start_streaming!(@text)
+        @job_id = start_streaming!(@text, @channel_key)
         @text.save
         flash.notice = "Pleasant reading."
+        flash.alert = nil
       rescue Errno::ENOENT => e
         flash.alert = "Couldn't read your url, sory!"
+        flash.notice = nil
       end
     else
       flash.alert = format_model_errors @text
+      flash.notice = nil
     end
-    @paused_enabled = "enabled"
-    @channel_key = @text.channel
+    @reset_channel = false
     render layout: 'application', template: 'word/stream'
   end
 

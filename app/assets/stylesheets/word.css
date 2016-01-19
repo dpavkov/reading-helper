@@ -24,3 +24,12 @@
     border: solid;
     text-decoration: none;
 }
+
+div#streamingPlace {
+    padding: 10px 30px;
+    border: solid;
+    border-color: #666666;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: inline-block;
+}

@@ -1,10 +1,13 @@
-<h1>Hi</h1>
+<h1>Hi, stranger!</h1>
+<p>This is a place where you can read text really quick.<br/>
+  Just sign up, paste url where that text is hosted and you'll read it in no time. <br/>
+  We woun't use your email for anything but login. Promise!
+</p>
 
-<p>Hi! This is a place where you can read text really quick.<br/>
-Just sign up, paste url where that text is hosted and you'll read it in no time!</p>
-<p>For example, our users have so far read the following sites:</p>
+<p>For example, our users have so far read the following sites:
+<p/>
 <ul>
-<% @texts.each do |text| %>
-  <li><%= text.url%></li>
-<% end %>
+  <% @texts.each do |text| %>
+      <li><a href="<%= text.url %>"><%= text.url %></a></li>
+  <% end %>
 </ul>

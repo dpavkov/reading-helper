@@ -16,7 +16,7 @@ module WordHelper
       errors = model.errors
       errors.keys.each do |field|
 
-        alert += field.to_s
+        alert += "<p>" + field.to_s + "</p>"
         alert += " <ul> "
         errors[field].each do |error|
           alert += " <li> "
@@ -29,10 +29,10 @@ module WordHelper
     alert
   end
 
-  def start_streaming! text
+  def start_streaming! text, channel_key
     doc = Nokogiri::HTML(open(text.url))
     words = parse_doc doc
-    schedule_stream!(words, text.speed, text.random_color == "1", text.channel)
+    schedule_stream!(words, text.speed, text.random_color == "1", channel_key)
   end
 
   def pause_stream! job_id

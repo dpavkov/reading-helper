@@ -47,4 +47,9 @@ $(function() {
             });
         }
     });
+
+    $('body').bind('beforeunload',function(){
+        location.reload(true)
+    });
 });
+

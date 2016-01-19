@@ -13,9 +13,11 @@
 <p class="notice">
   <%= notice %>
 </p>
-<p class="alert">
-  <%= sanitize(alert) %>
-</p>
+<div id="alert-wrapper">
+  <p class="alert">
+    <%= sanitize(alert) %>
+  </p>
+</div>
 <%= yield %>
 
 </body>

@@ -1,11 +1,14 @@
-<%- if !user_signed_in? && controller_name != 'sessions' %>
-  <%= link_to "Log in", new_session_path(user_resource) %><br />
+<span class="menu-link"><%- if !user_signed_in? && controller_name != 'sessions' %>
+  <%= link_to "Log in", new_session_path(user_resource) %>
 <% end -%>
-
+</span>
+<span class="menu-link">
 <%- if !user_signed_in? && controller_name != 'registrations' %>
-  <%= link_to "Sign up", new_registration_path(user_resource) %><br />
+  <%= link_to "Sign up", new_registration_path(user_resource) %>
 <% end -%>
-
+</span>
+<span class="menu-link">
 <%- if user_signed_in? %>
-    <%= link_to "Sign out", destroy_session_path(user_resource), :method => 'delete' %> <br />
+    <%= link_to "Sign out", destroy_session_path(user_resource), :method => 'delete' %>
 <% end -%>
+</span>

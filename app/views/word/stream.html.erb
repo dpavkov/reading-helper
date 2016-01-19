@@ -1,7 +1,6 @@
 <h2>Word streaming</h2>
 
 <%= form_for @text, url: {action: "stream"} do |f| %>
-    <%= f.hidden_field :channel,  value: @channel_key %>
     <%= f.hidden_field :job_id,  value: @job_id %>
     <div>
       <%= f.label :url %>
@@ -22,7 +21,7 @@
 </div>
 
 <div>
-  <a href="#" id="pause" class="<%= @pause_enabled%> control">Pause</a>
+  <a href="#" id="pause" class="enabled control">Pause</a>
   <a href="#" id="resume" class="disabled control">Resume</a>
 </div>
 
