@@ -20,3 +20,5 @@ Run _rails server -e development_
 # testing the application
 
 Run _rake_ to run tests.
+# seeing it in action
+Go to _https://fierce-crag-91898.herokuapp.com/
